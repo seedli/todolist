@@ -1,6 +1,6 @@
 package tom.demo.todolist.domain;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -34,7 +34,7 @@ public class User {
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
-	private Set<TodoList> todoLists;
+	private List<TodoList> todoLists;
 
 	public Long getId() {
 		return id;
@@ -68,11 +68,12 @@ public class User {
 		this.role = role;
 	}
 
-	public Set<TodoList> getTodoLists() {
+	public List<TodoList> getTodoLists() {
 		return todoLists;
 	}
 
-	public void setTodoLists(Set<TodoList> todoLists) {
+	public void setTodoLists(List<TodoList> todoLists) {
 		this.todoLists = todoLists;
 	}
+
 }
