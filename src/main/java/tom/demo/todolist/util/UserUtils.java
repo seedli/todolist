@@ -9,4 +9,8 @@ public class UserUtils {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		return auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equalsIgnoreCase("ADMIN"));
 	}
+
+	public static String getCurrentUserName() {
+		return SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+	}
 }

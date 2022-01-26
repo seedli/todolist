@@ -6,5 +6,5 @@ import tom.demo.todolist.domain.Role;
 
 public interface RoleService {
 
-	public List<Role> getAllRoles();
+	List<Role> getAllRoles();
 }

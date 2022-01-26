@@ -1,5 +1,8 @@
 package tom.demo.todolist.controller.json;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class UserJson {
 
 	private Long id;

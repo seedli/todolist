@@ -1,13 +1,17 @@
 package tom.demo.todolist.service;
 
+import java.util.List;
+
 import tom.demo.todolist.controller.json.UserJson;
 import tom.demo.todolist.domain.User;
 
 public interface UserService {
 
-	public User findById(Long id);
+	User findById(Long id);
 
-	public User findUserByName(String username);
+	User findUserByName(String username);
 
-	public Long saveUser(UserJson userJson);
+	Long saveUser(UserJson userJson);
+
+	List<User> findAll();
 }
