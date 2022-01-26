@@ -39,9 +39,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			"/webjars/**"
 	};
 
-	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication().withUser("admin").password("{noop}password").roles("USER");
-	}
-
 }

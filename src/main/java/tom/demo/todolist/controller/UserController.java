@@ -1,12 +1,15 @@
 package tom.demo.todolist.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import io.swagger.annotations.Api;
 import tom.demo.todolist.controller.json.UserJson;
@@ -21,6 +24,7 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
+	@Secured({ "ADMIN" })
 	@PostMapping("/")
 	public Long createUser(@RequestBody UserJson userJson) {
 		return userService.saveUser(userJson);
@@ -29,6 +33,11 @@ public class UserController {
 	@GetMapping("/{id}")
 	public String getNameById(@PathVariable("id") Long id) {
 		User u = userService.findById(id);
-		return u == null ? "Not Found" : u.getName();
+
+		if (u != null)
+			return u.getName();
+		else
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User Not Found.");
+
 	}
 }
