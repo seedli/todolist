@@ -24,9 +24,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable().authorizeRequests().antMatchers("/").permitAll().antMatchers("/user/**")
-				.hasAuthority("ADMIN").anyRequest().authenticated().and().httpBasic();
+		http.csrf().disable().authorizeRequests()
+				.antMatchers(AUTH_WHITELIST).permitAll()
+				.antMatchers("/").permitAll()
+				.antMatchers("/user/**").hasAuthority("ADMIN")
+				.anyRequest().authenticated().and().httpBasic();
 	}
+
+	private static final String[] AUTH_WHITELIST = {
+			// -- swagger ui
+			"/swagger-resources/**",
+			"/swagger-ui.html",
+			"/v2/api-docs",
+			"/webjars/**"
+	};
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
