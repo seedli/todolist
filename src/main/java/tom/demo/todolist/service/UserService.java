@@ -1,10 +1,13 @@
 package tom.demo.todolist.service;
 
-import java.util.Optional;
-
+import tom.demo.todolist.controller.json.UserJson;
 import tom.demo.todolist.domain.User;
 
 public interface UserService {
 
-	public Optional<User> findById(Long id);
+	public User findById(Long id);
+
+	public User findUserByName(String username);
+
+	public Long saveUser(UserJson userJson);
 }

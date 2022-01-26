@@ -14,7 +14,7 @@ http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibas
 				<constraints nullable="false"/>
 			</column>
 		</createTable>
-	
+
 		<createTable tableName="users">
 			<column name="user_id" type="BIGINT" autoIncrement="true">
 	            <constraints primaryKey="true" nullable="false"/>
@@ -30,5 +30,27 @@ http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibas
 			</column>
 		</createTable>
 		
+	</changeSet>
+	
+	<changeSet id="20220126-10-04-01" author="Tom Li">
+		<insert tableName="user_roles">   
+            <column name="role" value="ADMIN" />
+        </insert>
+        <insert tableName="user_roles">   
+            <column name="role" value="USER" />
+        </insert>
+	</changeSet>
+	
+	<changeSet id="20220126-10-04-02" author="Tom Li">
+		<insert tableName="users">   
+            <column name="name" value="admin" />
+            <column name="password" value="password" />
+            <column name="role_id" valueComputed="(select role_id from user_roles where user_roles.role = 'ADMIN')" />
+        </insert>
+        <insert tableName="users">   
+            <column name="name" value="tom" />
+            <column name="password" value="tom" />
+            <column name="role_id" valueComputed="(select role_id from user_roles where user_roles.role = 'USER')" />
+        </insert>
 	</changeSet>
 </databaseChangeLog>

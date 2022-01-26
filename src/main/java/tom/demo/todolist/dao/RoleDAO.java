@@ -3,10 +3,9 @@ package tom.demo.todolist.dao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import tom.demo.todolist.domain.User;
+import tom.demo.todolist.domain.Role;
 
 @Repository
-public interface UserDAO extends JpaRepository<User, Long> {
-
-	public User findByName(String name);
+public interface RoleDAO extends JpaRepository<Role, Long> {
+	Role findByRole(String role);
 }
