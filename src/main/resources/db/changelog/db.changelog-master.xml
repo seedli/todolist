@@ -6,6 +6,7 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd
 http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd">
 	<changeSet id="20220125-20-50-01" author="Tom Li">
+		<comment>Init schema</comment>
 		<createTable tableName="user_roles">
 			<column name="role_id" type="BIGINT" autoIncrement="true">
 	            <constraints primaryKey="true" nullable="false"/>
@@ -33,6 +34,7 @@ http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibas
 	</changeSet>
 	
 	<changeSet id="20220126-10-04-01" author="Tom Li">
+		<comment>Insert role data</comment>
 		<insert tableName="user_roles">   
             <column name="role" value="ADMIN" />
         </insert>
@@ -42,14 +44,15 @@ http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibas
 	</changeSet>
 	
 	<changeSet id="20220126-10-04-02" author="Tom Li">
+		<comment>Insert user data</comment>
 		<insert tableName="users">   
             <column name="name" value="admin" />
-            <column name="password" value="password" />
+            <column name="password" value="$2a$10$kcVH3Uy86nJgQtYqAFffZORT9wbNMuNtqytcUZQRX51dx6IfSFEd." />
             <column name="role_id" valueComputed="(select role_id from user_roles where user_roles.role = 'ADMIN')" />
         </insert>
         <insert tableName="users">   
             <column name="name" value="tom" />
-            <column name="password" value="tom" />
+            <column name="password" value="$2a$10$kcVH3Uy86nJgQtYqAFffZORT9wbNMuNtqytcUZQRX51dx6IfSFEd." />
             <column name="role_id" valueComputed="(select role_id from user_roles where user_roles.role = 'USER')" />
         </insert>
 	</changeSet>
