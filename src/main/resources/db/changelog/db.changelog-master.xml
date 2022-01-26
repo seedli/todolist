@@ -21,7 +21,7 @@ http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibas
 	            <constraints primaryKey="true" nullable="false"/>
 	        </column>
 			<column name="name" type="varchar(50)">
-				<constraints nullable="false"/>
+				<constraints unique="true" nullable="false"/>
 			</column>
 			<column name="password" type="varchar(100)">
 				<constraints nullable="false"/>
@@ -52,6 +52,11 @@ http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibas
         </insert>
         <insert tableName="users">   
             <column name="name" value="tom" />
+            <column name="password" value="$2a$10$kcVH3Uy86nJgQtYqAFffZORT9wbNMuNtqytcUZQRX51dx6IfSFEd." />
+            <column name="role_id" valueComputed="(select role_id from user_roles where user_roles.role = 'USER')" />
+        </insert>
+        <insert tableName="users">   
+            <column name="name" value="jerry" />
             <column name="password" value="$2a$10$kcVH3Uy86nJgQtYqAFffZORT9wbNMuNtqytcUZQRX51dx6IfSFEd." />
             <column name="role_id" valueComputed="(select role_id from user_roles where user_roles.role = 'USER')" />
         </insert>
