@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
-import tom.demo.todolist.util.UserUtils;
+import tom.demo.todolist.util.UserUtilities;
 
 @Api(tags = "Item API")
 @RestController
@@ -15,6 +15,6 @@ public class ItemController {
 
 	@GetMapping("/hello/{name}")
 	public String hello(@PathVariable String name) {
-		return "Hello " + name + " " + UserUtils.isAdmin();
+		return "Hello " + name + " " + UserUtilities.isAdmin();
 	}
 }

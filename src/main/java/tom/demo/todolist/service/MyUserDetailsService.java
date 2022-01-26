@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import tom.demo.todolist.domain.Role;
 import tom.demo.todolist.domain.User;
+import tom.demo.todolist.util.CustomUser;
 
 @Service
 public class MyUserDetailsService implements UserDetailsService {
@@ -37,8 +38,8 @@ public class MyUserDetailsService implements UserDetailsService {
 		return grantedAuthorities;
 	}
 
-	private UserDetails buildUserForAuthentication(User user, List<GrantedAuthority> authorities) {
-		return new org.springframework.security.core.userdetails.User(user.getName(), user.getPassword(), true, true,
-				true, true, authorities);
+	private CustomUser buildUserForAuthentication(User user, List<GrantedAuthority> authorities) {
+		return new CustomUser(user.getName(), user.getPassword(), true, true,
+				true, true, authorities, user.getId());
 	}
 }

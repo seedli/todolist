@@ -11,7 +11,11 @@ public interface UserService {
 
 	User findUserByName(String username);
 
-	Long saveUser(UserJson userJson);
-
 	List<User> findAll();
+
+	Long createUser(UserJson userJson);
+
+	Long updateUser(UserJson userJson);
+
+	Long updatePassword(UserJson userJson);
 }
