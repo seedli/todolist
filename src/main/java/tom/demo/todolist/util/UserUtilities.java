@@ -20,6 +20,11 @@ public class UserUtilities {
 		return (CustomUser) auth.getPrincipal();
 	}
 
+	public static Long getCurrentUserId() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		return ((CustomUser) auth.getPrincipal()).getUserId();
+	}
+
 	public static String getCurrentUserName() {
 		return SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
 	}

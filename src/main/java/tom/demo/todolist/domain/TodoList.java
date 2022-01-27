@@ -1,10 +1,18 @@
 package tom.demo.todolist.domain;
 
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -18,6 +26,17 @@ public class TodoList {
 
 	@Column(name = "name")
 	private String name;
+
+	@Column(name = "user_id")
+	private Long userId;
+
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "list_id")
+	private List<Item> items;
+
+	@ManyToMany
+	@JoinTable(name = "shared_lists", joinColumns = @JoinColumn(name = "list_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+	private Set<User> users;
 
 	public Long getId() {
 		return id;
@@ -33,6 +52,30 @@ public class TodoList {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public List<Item> getItems() {
+		return items;
+	}
+
+	public void setItems(List<Item> items) {
+		this.items = items;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+	public Set<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Set<User> users) {
+		this.users = users;
 	}
 
 }

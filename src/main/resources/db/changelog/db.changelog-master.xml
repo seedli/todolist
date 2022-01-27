@@ -27,7 +27,7 @@ http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibas
 				<constraints nullable="false"/>
 			</column>
 			<column name="role_id" type="BIGINT">
-				<constraints foreignKeyName="fk_user_role_id" references="roles(role_id)"/>
+				<constraints foreignKeyName="fk_user_role_id" references="roles(role_id)" nullable="false"/>
 			</column>
 		</createTable>
 		
@@ -39,11 +39,36 @@ http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibas
 				<constraints nullable="false"/>
 			</column>
 			<column name="user_id" type="BIGINT">
-				<constraints foreignKeyName="fk_list_user_id" references="users(user_id)"/>
+				<constraints foreignKeyName="fk_list_user_id" references="users(user_id)" nullable="false"/>
 			</column>
 		</createTable>
 		
+		<createTable tableName="items">
+			<column name="item_id" type="BIGINT" autoIncrement="true">
+	            <constraints primaryKey="true" nullable="false"/>
+	        </column>
+	        <column name="name" type="varchar(50)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="description" type="varchar(255)"/>
+			<column name="deadline" type="datetime">
+				<constraints nullable="false"/>
+			</column>
+			<column name="is_done" type="boolean"/>
+			<column name="sort_order" type="int"/>
+			<column name="list_id" type="BIGINT">
+				<constraints foreignKeyName="fk_item_list_id" references="lists(list_id)" nullable="false"/>
+			</column>
+		</createTable>
 		
+		<createTable tableName="shared_lists">
+			<column name="list_id" type="BIGINT">
+	            <constraints nullable="false" primaryKeyName="pk_shared_list_user_id" foreignKeyName="fk_shared_list_id" references="lists(list_id)"/>
+	        </column>
+	        <column name="user_id" type="BIGINT">
+	            <constraints nullable="false" primaryKeyName="pk_shared_list_user_id" foreignKeyName="fk_shared_user_id" references="users(user_id)"/>
+	        </column>
+		</createTable>
 	</changeSet>
 	
 	<changeSet id="20220126-10-04-01" author="Tom Li">
@@ -78,8 +103,80 @@ http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibas
 	<changeSet id="20220126-21-06-01" author="Tom Li">
 		<comment>Insert list data</comment>
 		<insert tableName="lists">   
-            <column name="name" value="Admin's List" />
+            <column name="name" value="admin list 1" />
             <column name="user_id" valueComputed="(select user_id from users where name = 'admin')" />
+        </insert>
+        <insert tableName="lists">   
+            <column name="name" value="admin list 2" />
+            <column name="user_id" valueComputed="(select user_id from users where name = 'admin')" />
+        </insert>
+        <insert tableName="lists">   
+            <column name="name" value="tom list 1" />
+            <column name="user_id" valueComputed="(select user_id from users where name = 'tom')" />
+        </insert>
+        <insert tableName="lists">   
+            <column name="name" value="tom list 2" />
+            <column name="user_id" valueComputed="(select user_id from users where name = 'tom')" />
+        </insert>
+    </changeSet>
+    
+    <changeSet id="20220127-11-02-01" author="Tom Li">
+		<comment>Insert Item data</comment>
+		<insert tableName="items">   
+            <column name="name" value="dishes" />
+            <column name="description" value="do dishes" />
+            <column name="deadline" value="2022-01-20 10:00:00" />
+            <column name="is_done" valueBoolean="true" />
+            <column name="sort_order" value="1" />
+            <column name="list_id" valueComputed="(select list_id from lists where name = 'admin list 1')" />
+        </insert>
+        <insert tableName="items">   
+            <column name="name" value="floors" />
+            <column name="description" value="sweep floors" />
+            <column name="deadline" value="2022-01-26 08:00:00" />
+            <column name="is_done" valueBoolean="true" />
+            <column name="sort_order" value="2" />
+            <column name="list_id" valueComputed="(select list_id from lists where name = 'admin list 1')" />
+        </insert>
+        <insert tableName="items">   
+            <column name="name" value="study" />
+            <column name="description" value="time to strive" />
+            <column name="deadline" value="2022-01-27 10:00:00" />
+            <column name="is_done" valueBoolean="false" />
+            <column name="sort_order" value="3" />
+            <column name="list_id" valueComputed="(select list_id from lists where name = 'admin list 1')" />
+        </insert>
+        <insert tableName="items">   
+            <column name="name" value="game" />
+            <column name="description" value="time to play" />
+            <column name="deadline" value="2022-01-28 10:00:00" />
+            <column name="is_done" valueBoolean="false" />
+            <column name="sort_order" value="4" />
+            <column name="list_id" valueComputed="(select list_id from lists where name = 'admin list 1')" />
+        </insert>
+        <insert tableName="items">   
+            <column name="name" value="solve bug" />
+            <column name="description" value="debugging..." />
+            <column name="deadline" value="2022-03-03 10:00:00" />
+            <column name="is_done" valueBoolean="false" />
+            <column name="sort_order" value="1" />
+            <column name="list_id" valueComputed="(select list_id from lists where name = 'tom list 1')" />
+        </insert>
+        <insert tableName="items">   
+            <column name="name" value="solve issue" />
+            <column name="description" value="ticket again" />
+            <column name="deadline" value="2022-02-03 10:00:00" />
+            <column name="is_done" valueBoolean="false" />
+            <column name="sort_order" value="2" />
+            <column name="list_id" valueComputed="(select list_id from lists where name = 'tom list 1')" />
+        </insert>
+        <insert tableName="items">   
+            <column name="name" value="dinner" />
+            <column name="description" value="dine in hell!!" />
+            <column name="deadline" value="2022-04-03 10:00:00" />
+            <column name="is_done" valueBoolean="false" />
+            <column name="sort_order" value="3" />
+            <column name="list_id" valueComputed="(select list_id from lists where name = 'tom list 1')" />
         </insert>
     </changeSet>
 </databaseChangeLog>

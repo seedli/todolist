@@ -18,7 +18,7 @@ import tom.demo.todolist.domain.User;
 import tom.demo.todolist.util.CustomUser;
 
 @Service
-public class MyUserDetailsService implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired
 	private UserService userService;

@@ -1,6 +1,7 @@
 package tom.demo.todolist.domain;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -35,6 +37,9 @@ public class User {
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
 	private List<TodoList> todoLists;
+
+	@ManyToMany(mappedBy = "users")
+	private Set<TodoList> sharedLists;
 
 	public Long getId() {
 		return id;
@@ -74,6 +79,14 @@ public class User {
 
 	public void setTodoLists(List<TodoList> todoLists) {
 		this.todoLists = todoLists;
+	}
+
+	public Set<TodoList> getSharedLists() {
+		return sharedLists;
+	}
+
+	public void setSharedLists(Set<TodoList> sharedLists) {
+		this.sharedLists = sharedLists;
 	}
 
 }

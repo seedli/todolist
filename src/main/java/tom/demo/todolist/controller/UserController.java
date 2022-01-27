@@ -50,7 +50,7 @@ public class UserController {
 		if (UserUtilities.isAdmin() || UserUtilities.isCurrentUser(userJson.getId()))
 			return userService.updatePassword(userJson);
 		else
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
 	}
 
 	@GetMapping("/list")
