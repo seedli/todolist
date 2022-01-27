@@ -16,7 +16,7 @@ public interface ItemService {
 
 	Item checkItem(Long itemId);
 
-	Item updateItem(ItemJson json);
+	ItemJson updateItem(ItemJson json);
 
 	boolean hasPermissionOfItem(Long userId, Long itemId);
 

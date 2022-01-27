@@ -69,13 +69,11 @@ public class ItemServiceImpl implements ItemService {
 		item.setSortOrder(maxSortOrder == null ? 1 : maxSortOrder + 1);
 		item.setListId(json.getListId());
 
-		itemDAO.save(item);
-
-		return item.getId();
+		return itemDAO.save(item).getId();
 	}
 
 	@Override
-	public Item updateItem(ItemJson json) {
+	public ItemJson updateItem(ItemJson json) {
 		Item item = itemDAO.findById(json.getId()).orElse(null);
 		if (item != null) {
 			item.setName(json.getName());
@@ -86,7 +84,7 @@ public class ItemServiceImpl implements ItemService {
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Item not found");
 		}
-		return item;
+		return json;
 	}
 
 	@Override

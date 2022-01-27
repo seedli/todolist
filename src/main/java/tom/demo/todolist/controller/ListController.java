@@ -42,7 +42,7 @@ public class ListController {
 	}
 
 	@GetMapping("/shared")
-	public List<ListJson> getListSharedToMe() {
+	public List<ListJson> getListSharedWithMe() {
 		return (List<ListJson>) new ListJsonAdapter()
 				.convertDomainToJSON(listService.getListSharedWithMe(UserUtilities.getCurrentUserId()));
 	}

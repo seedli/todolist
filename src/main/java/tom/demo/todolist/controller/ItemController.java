@@ -43,7 +43,7 @@ public class ItemController {
 	public ItemJson updateItem(@RequestBody ItemJson json) {
 		if (UserUtilities.isAdmin()
 				|| listService.hasPermissionOfList(UserUtilities.getCurrentUserId(), json.getListId()))
-			return new ItemJsonAdapter().convertDomainToJSON(itemService.updateItem(json));
+			return itemService.updateItem(json);
 		else
 			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
 	}
