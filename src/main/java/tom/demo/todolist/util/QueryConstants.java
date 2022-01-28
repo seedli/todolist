@@ -7,4 +7,7 @@ public class QueryConstants {
 
 	public static String ASC = "asc";
 	public static String DESC = "desc";
+
+	public static String SORT_ORDER = "sortOrder";
+	public static String DEADLINE = "deadline";
 }

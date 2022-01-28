@@ -18,6 +18,7 @@ import tom.demo.todolist.dao.UserDAO;
 import tom.demo.todolist.domain.Item;
 import tom.demo.todolist.domain.TodoList;
 import tom.demo.todolist.domain.User;
+import tom.demo.todolist.util.QueryConstants;
 
 @Service
 public class ItemServiceImpl implements ItemService {
@@ -47,10 +48,10 @@ public class ItemServiceImpl implements ItemService {
 	@Override
 	public List<Item> getItemsByListId(Long listId, String orderBy, String sort, String status) {
 		// default is ordering by sortOrder
-		if ("deadline".equalsIgnoreCase(orderBy)) {
-			return itemDAO.findByListId(listId, orderBy, sort, status);
+		if (QueryConstants.DEADLINE.equalsIgnoreCase(orderBy)) {
+			return itemDAO.findByListId(listId, QueryConstants.DEADLINE, sort, status);
 		} else {
-			return itemDAO.findByListId(listId, "sortOrder", sort, status);
+			return itemDAO.findByListId(listId, QueryConstants.SORT_ORDER, sort, status);
 		}
 	}
 

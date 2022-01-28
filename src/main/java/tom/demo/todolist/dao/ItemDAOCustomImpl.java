@@ -28,6 +28,7 @@ public class ItemDAOCustomImpl implements ItemDAOCustom {
 
 		List<Predicate> predicates = new ArrayList<>();
 		predicates.add(cb.equal(item.get("listId"), listId));
+
 		if (QueryConstants.EXPIRED.equalsIgnoreCase(status))
 			predicates.add(cb.lessThan(item.get("deadline"), LocalDateTime.now()));
 		else if (QueryConstants.UNEXPIRED.equalsIgnoreCase(status))
