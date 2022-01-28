@@ -11,6 +11,7 @@ public class ListJsonAdapter implements JsonAdapter<TodoList, ListJson> {
 
 		json.setId(todoList.getId());
 		json.setName(todoList.getName());
+		json.setUserId(todoList.getUserId());
 
 		return json;
 	}

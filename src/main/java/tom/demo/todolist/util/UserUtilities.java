@@ -10,22 +10,18 @@ public class UserUtilities {
 		return auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equalsIgnoreCase("ADMIN"));
 	}
 
-	public static boolean isCurrentUser(Long userId) {
-		CustomUser customUser = getCurrentUser();
-		return customUser == null ? false : customUser.getUserId() == userId;
-	}
-
 	public static CustomUser getCurrentUser() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		return (CustomUser) auth.getPrincipal();
 	}
 
-	public static Long getCurrentUserId() {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		return ((CustomUser) auth.getPrincipal()).getUserId();
+	public static boolean isCurrentUser(Long userId) {
+		CustomUser customUser = getCurrentUser();
+		return customUser == null ? false : customUser.getUserId() == userId;
 	}
 
-	public static String getCurrentUserName() {
-		return SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+	public static Long getCurrentUserId() {
+		return getCurrentUser().getUserId();
 	}
+
 }

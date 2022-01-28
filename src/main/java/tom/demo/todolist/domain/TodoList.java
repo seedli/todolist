@@ -36,7 +36,7 @@ public class TodoList {
 
 	@ManyToMany
 	@JoinTable(name = "shared_lists", joinColumns = @JoinColumn(name = "list_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
-	private Set<User> users;
+	private Set<User> sharedUsers;
 
 	public Long getId() {
 		return id;
@@ -70,12 +70,12 @@ public class TodoList {
 		this.userId = userId;
 	}
 
-	public Set<User> getUsers() {
-		return users;
+	public Set<User> getSharedUsers() {
+		return sharedUsers;
 	}
 
-	public void setUsers(Set<User> users) {
-		this.users = users;
+	public void setSharedUsers(Set<User> sharedUsers) {
+		this.sharedUsers = sharedUsers;
 	}
 
 }

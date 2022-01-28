@@ -93,10 +93,10 @@ public class ListServiceImpl implements ListService {
 		TodoList list = listDAO.findById(listId).orElse(null);
 		User user = userDAO.findById(userId).orElse(null);
 		if (list != null && user != null) {
-			Set<User> users = list.getUsers();
+			Set<User> users = list.getSharedUsers();
 			if (users == null) {
 				users = new HashSet<>();
-				list.setUsers(users);
+				list.setSharedUsers(users);
 			}
 			users.add(user);
 		}
@@ -109,7 +109,7 @@ public class ListServiceImpl implements ListService {
 		TodoList list = listDAO.findById(listId).orElse(null);
 		User user = userDAO.findById(userId).orElse(null);
 		if (list != null && user != null) {
-			Set<User> users = list.getUsers();
+			Set<User> users = list.getSharedUsers();
 			if (users != null)
 				users.remove(user);
 		}

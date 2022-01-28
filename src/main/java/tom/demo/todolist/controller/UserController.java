@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,19 +31,13 @@ public class UserController {
 	@PostMapping()
 	@PreAuthorize("hasRole('ADMIN')")
 	public Long createUser(@RequestBody UserJson userJson) {
-		if (UserUtilities.isAdmin())
-			return userService.createUser(userJson);
-		else
-			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+		return userService.createUser(userJson);
 	}
 
 	@PutMapping()
 	@PreAuthorize("hasRole('ADMIN')")
 	public Long updateUser(@RequestBody UserJson userJson) {
-		if (UserUtilities.isAdmin())
-			return userService.updateUser(userJson);
-		else
-			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+		return userService.updateUser(userJson);
 	}
 
 	@PutMapping("/password")
@@ -51,6 +46,11 @@ public class UserController {
 			return userService.updatePassword(userJson);
 		else
 			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+	}
+
+	@GetMapping("/{userId}")
+	public UserJson getUserById(@PathVariable("userId") Long userId) {
+		return new UserJsonAdapter().convertDomainToJSON(userService.findById(userId));
 	}
 
 	@GetMapping("/list")

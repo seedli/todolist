@@ -28,7 +28,6 @@ import tom.demo.todolist.dao.UserDAO;
 import tom.demo.todolist.domain.Item;
 import tom.demo.todolist.domain.TodoList;
 import tom.demo.todolist.domain.User;
-import tom.demo.todolist.service.ItemService;
 import tom.demo.todolist.util.QueryConstants;
 
 @SpringBootTest

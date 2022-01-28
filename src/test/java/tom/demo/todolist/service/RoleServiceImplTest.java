@@ -15,7 +15,6 @@ import org.springframework.test.context.TestPropertySource;
 
 import tom.demo.todolist.dao.RoleDAO;
 import tom.demo.todolist.domain.Role;
-import tom.demo.todolist.service.RoleService;
 
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application-integrationtest.properties")

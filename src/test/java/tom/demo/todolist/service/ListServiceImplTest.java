@@ -24,7 +24,6 @@ import tom.demo.todolist.dao.ListDAO;
 import tom.demo.todolist.dao.UserDAO;
 import tom.demo.todolist.domain.TodoList;
 import tom.demo.todolist.domain.User;
-import tom.demo.todolist.service.ListService;
 
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application-integrationtest.properties")
