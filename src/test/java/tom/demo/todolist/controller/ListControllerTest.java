@@ -4,7 +4,9 @@ import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -109,6 +111,8 @@ public class ListControllerTest {
 		Mockito.when(itemService.getItemsByListId(anyLong(), anyString(), anyString(), anyString())).thenReturn(items);
 		Mockito.when(listService.hasPermissionOfList(anyLong(), anyLong())).thenReturn(true);
 		Mockito.when(listService.updateList(any(ListJson.class))).then(returnsFirstArg());
+		Mockito.when(listService.createList(any(ListJson.class))).thenReturn(99L);
+		Mockito.when(listService.deleteList(anyLong())).thenReturn(99L);
 		Mockito.when(listService.shareListToUser(anyLong(), anyLong())).thenReturn(99L);
 		Mockito.when(listService.revokeSharedListFromUser(anyLong(), anyLong())).thenReturn(99L);
 	}
@@ -142,6 +146,30 @@ public class ListControllerTest {
 				.andExpect(content().json(
 						"[{'id':1,'name':'item1','description':'item1 desc','listId':1,'sortOrder':1,'deadline':'2022-01-28 16:12:16','done':false},"
 								+ "{'id':2,'name':'item2','description':'item2 desc','listId':1,'sortOrder':2,'deadline':'2022-01-28 16:12:16','done':false}]"));
+	}
+
+	@Test
+	@WithUserDetails("admin")
+	public void createListTest() throws JsonProcessingException, Exception {
+		ListJson json = new ListJson();
+		json.setId(1L);
+		json.setName("test list");
+		json.setUserId(1L);
+
+		this.mockMvc
+				.perform(post("/list").contentType(MediaType.APPLICATION_JSON)
+						.content(new ObjectMapper().writeValueAsString(json)))
+				.andDo(print()).andExpect(status().isOk())
+				.andExpect(content().string("99"));
+	}
+
+	@Test
+	@WithUserDetails("admin")
+	public void deleteListTest() throws JsonProcessingException, Exception {
+		this.mockMvc
+				.perform(delete("/list/99"))
+				.andDo(print()).andExpect(status().isOk())
+				.andExpect(content().string("99"));
 	}
 
 	@Test
