@@ -38,7 +38,7 @@ public class User {
 	@JoinColumn(name = "user_id")
 	private List<TodoList> todoLists;
 
-	@ManyToMany(mappedBy = "users")
+	@ManyToMany(mappedBy = "sharedUsers")
 	private Set<TodoList> sharedLists;
 
 	public Long getId() {

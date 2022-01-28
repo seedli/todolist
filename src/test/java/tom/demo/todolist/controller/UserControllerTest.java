@@ -74,7 +74,7 @@ public class UserControllerTest {
 		this.mockMvc
 				.perform(get("/user/list"))
 				.andDo(print()).andExpect(status().isOk())
-				.andExpect(content().json("{'id':1,'name':'tom'},{'id':2,'name':'jerry'}"));
+				.andExpect(content().json("[{'id':1,'name':'tom'},{'id':2,'name':'jerry'}]"));
 	}
 
 	@Test

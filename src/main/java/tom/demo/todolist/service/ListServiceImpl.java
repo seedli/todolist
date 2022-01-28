@@ -33,7 +33,7 @@ public class ListServiceImpl implements ListService {
 	}
 
 	@Override
-	public List<TodoList> getListSharedWithMe(Long userId) {
+	public List<TodoList> getListSharedListsByUserId(Long userId) {
 		User user = userDAO.findById(userId).orElse(null);
 		if (user != null && user.getSharedLists() != null) {
 			return new ArrayList<>(user.getSharedLists());

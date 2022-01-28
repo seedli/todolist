@@ -41,10 +41,10 @@ public class ListController {
 				.convertDomainToJSON(listService.getListsByUserId(UserUtilities.getCurrentUserId()));
 	}
 
-	@GetMapping("/shared")
+	@GetMapping("/sharedWithMe")
 	public List<ListJson> getListSharedWithMe() {
 		return (List<ListJson>) new ListJsonAdapter()
-				.convertDomainToJSON(listService.getListSharedWithMe(UserUtilities.getCurrentUserId()));
+				.convertDomainToJSON(listService.getListSharedListsByUserId(UserUtilities.getCurrentUserId()));
 	}
 
 	@GetMapping("/{listId}")

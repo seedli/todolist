@@ -1,12 +1,17 @@
 package tom.demo.todolist.controller;
 
+import static org.mockito.AdditionalAnswers.returnsFirstArg;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -18,11 +23,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import tom.demo.todolist.CustomWebMvcConfig;
 import tom.demo.todolist.config.BeanConfig;
+import tom.demo.todolist.controller.json.ListJson;
 import tom.demo.todolist.domain.Item;
 import tom.demo.todolist.domain.Role;
 import tom.demo.todolist.domain.TodoList;
@@ -45,6 +55,9 @@ public class ListControllerTest {
 
 	@BeforeEach
 	public void setUp() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		LocalDateTime dateTime = LocalDateTime.parse("2022-01-28 16:12:16", formatter);
+
 		User tom = new User();
 		tom.setId(2L);
 		tom.setName("tom");
@@ -56,7 +69,7 @@ public class ListControllerTest {
 		item1.setId(1L);
 		item1.setName("item1");
 		item1.setDescription("item1 desc");
-		item1.setDeadline(LocalDateTime.now());
+		item1.setDeadline(dateTime);
 		item1.setDone(false);
 		item1.setSortOrder(1);
 		item1.setListId(1L);
@@ -65,7 +78,7 @@ public class ListControllerTest {
 		item2.setId(2L);
 		item2.setName("item2");
 		item2.setDescription("item2 desc");
-		item2.setDeadline(LocalDateTime.now());
+		item2.setDeadline(dateTime);
 		item2.setDone(false);
 		item2.setSortOrder(2);
 		item2.setListId(1L);
@@ -92,6 +105,12 @@ public class ListControllerTest {
 		lists.add(list2);
 
 		Mockito.when(listService.getListsByUserId(anyLong())).thenReturn(lists);
+		Mockito.when(listService.getListSharedListsByUserId(anyLong())).thenReturn(lists);
+		Mockito.when(itemService.getItemsByListId(anyLong(), anyString(), anyString(), anyString())).thenReturn(items);
+		Mockito.when(listService.hasPermissionOfList(anyLong(), anyLong())).thenReturn(true);
+		Mockito.when(listService.updateList(any(ListJson.class))).then(returnsFirstArg());
+		Mockito.when(listService.shareListToUser(anyLong(), anyLong())).thenReturn(99L);
+		Mockito.when(listService.revokeSharedListFromUser(anyLong(), anyLong())).thenReturn(99L);
 	}
 
 	@Test
@@ -102,5 +121,59 @@ public class ListControllerTest {
 				.andDo(print()).andExpect(status().isOk())
 				.andExpect(content().json(
 						"[{'id':1,'name':'list 1','userId':1}, {'id':2,'name':'list 2','userId':1}]"));
+	}
+
+	@Test
+	@WithUserDetails("admin")
+	public void getListSharedWithMeTest() throws Exception {
+		this.mockMvc
+				.perform(get("/list/sharedWithMe"))
+				.andDo(print()).andExpect(status().isOk())
+				.andExpect(content().json(
+						"[{'id':1,'name':'list 1','userId':1}, {'id':2,'name':'list 2','userId':1}]"));
+	}
+
+	@Test
+	@WithUserDetails("admin")
+	public void getItemsByListIdTest() throws Exception {
+		this.mockMvc
+				.perform(get("/list/1?status=expired&orderBy=sortOrder&sort=asc"))
+				.andDo(print()).andExpect(status().isOk())
+				.andExpect(content().json(
+						"[{'id':1,'name':'item1','description':'item1 desc','listId':1,'sortOrder':1,'deadline':'2022-01-28 16:12:16','done':false},"
+								+ "{'id':2,'name':'item2','description':'item2 desc','listId':1,'sortOrder':2,'deadline':'2022-01-28 16:12:16','done':false}]"));
+	}
+
+	@Test
+	@WithUserDetails("admin")
+	public void updateListTest() throws JsonProcessingException, Exception {
+		ListJson json = new ListJson();
+		json.setId(1L);
+		json.setName("test list");
+		json.setUserId(1L);
+
+		this.mockMvc
+				.perform(put("/list").contentType(MediaType.APPLICATION_JSON)
+						.content(new ObjectMapper().writeValueAsString(json)))
+				.andDo(print()).andExpect(status().isOk())
+				.andExpect(content().json("{'id':1,'name':'test list','userId':1}"));
+	}
+
+	@Test
+	@WithUserDetails("admin")
+	public void shareListToUserTest() throws Exception {
+		this.mockMvc
+				.perform(put("/list/share/99/2"))
+				.andDo(print()).andExpect(status().isOk())
+				.andExpect(content().string("99"));
+	}
+
+	@Test
+	@WithUserDetails("admin")
+	public void revokeListFromUserTest() throws Exception {
+		this.mockMvc
+				.perform(put("/list/revoke/99/2"))
+				.andDo(print()).andExpect(status().isOk())
+				.andExpect(content().string("99"));
 	}
 }

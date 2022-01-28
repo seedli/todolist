@@ -79,7 +79,7 @@ public class ListServiceImplTest {
 
 	@Test
 	public void getListSharedWithMe() {
-		assertEquals(1, listService.getListSharedWithMe(1L).size());
+		assertEquals(1, listService.getListSharedListsByUserId(1L).size());
 	}
 
 	@Test

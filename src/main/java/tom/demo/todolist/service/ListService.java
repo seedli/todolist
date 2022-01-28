@@ -21,5 +21,5 @@ public interface ListService {
 
 	Long revokeSharedListFromUser(Long listId, Long userId);
 
-	List<TodoList> getListSharedWithMe(Long userId);
+	List<TodoList> getListSharedListsByUserId(Long userId);
 }
