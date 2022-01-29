@@ -42,6 +42,7 @@ Once the application has been started, there are three user accounts with differ
 Their default password all are **Truck123**
 
 Users with ADMIN role can do any manipulation of the funtions of this application.
+
 Normal USER can view the user list, chenge their password, view the lists which are belong to them or shared with them, and update their items.
 
 ### API Examples
