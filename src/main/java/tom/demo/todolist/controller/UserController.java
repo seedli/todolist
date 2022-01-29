@@ -3,6 +3,7 @@ package tom.demo.todolist.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,6 +33,11 @@ public class UserController {
 	@PutMapping()
 	public Long updateUser(@RequestBody UserJson userJson) {
 		return userService.updateUser(userJson);
+	}
+
+	@DeleteMapping("/{userId}")
+	public Long deleteUser(@PathVariable("userId") Long userId) {
+		return userService.deleteUser(userId);
 	}
 
 	@PutMapping("/password")

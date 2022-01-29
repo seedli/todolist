@@ -30,11 +30,11 @@ public class User {
 	@Column(name = "password")
 	private String password;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "role_id")
 	private Role role;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "user_id")
 	private List<TodoList> todoLists;
 

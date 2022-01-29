@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
 import tom.demo.todolist.controller.json.ItemJson;
+import tom.demo.todolist.controller.json.ItemMoveJson;
 import tom.demo.todolist.controller.json.ListJson;
 import tom.demo.todolist.service.RbacService;
 import tom.demo.todolist.util.UserUtilities;
@@ -27,6 +28,10 @@ public class ListPermissionAspect {
 
 	@Pointcut("execution(* tom.demo.todolist.service.ListService.updateList(..))")
 	public void updateListPC() {
+	}
+
+	@Pointcut("execution(* tom.demo.todolist.service.ItemService.moveItem(..))")
+	public void methodsWithItemMoveJsonPC() {
 	}
 
 	@Pointcut("execution(* tom.demo.todolist.service.ListService.deleteList(..)) || "
@@ -66,6 +71,12 @@ public class ListPermissionAspect {
 	public void beforeMethodsWithItemJson(JoinPoint joinPoint) {
 		ItemJson itemJson = (ItemJson) joinPoint.getArgs()[0];
 		checkPermissionOfList(itemJson.getListId());
+	}
+
+	@Before("methodsWithItemMoveJsonPC()")
+	public void beforeMethodsWithItemMoveJson(JoinPoint joinPoint) {
+		ItemMoveJson itemMoveJson = (ItemMoveJson) joinPoint.getArgs()[0];
+		checkPermissionOfList(itemMoveJson.getTargetListId());
 	}
 
 	private void checkPermissionOfList(Long listId) {

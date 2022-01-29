@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
-import tom.demo.todolist.controller.json.ItemJson;
+import tom.demo.todolist.controller.json.ItemMoveJson;
 import tom.demo.todolist.service.RbacService;
 import tom.demo.todolist.util.UserUtilities;
 
@@ -21,17 +21,18 @@ public class ItemPermissionAspect {
 	RbacService rbacService;
 
 	@Pointcut("execution(* tom.demo.todolist.service.ItemService.moveItem(..))")
-	public void methodsWithItemJsonPC() {
+	public void methodsWithItemMoveJsonPC() {
 	}
 
-	@Pointcut("execution(* tom.demo.todolist.service.ItemService.moveItem(..))")
+	@Pointcut("execution(* tom.demo.todolist.service.ItemService.checkItem(..)) ||"
+			+ "execution(* tom.demo.todolist.service.ItemService.deleteItem(..))")
 	public void methodsWithItemIdPC() {
 	}
 
-	@Before("methodsWithItemJsonPC()")
-	public void beforeMethodsWithItemJson(JoinPoint joinPoint) {
-		ItemJson itemJson = (ItemJson) joinPoint.getArgs()[0];
-		checkPermissionOfItem(itemJson.getId());
+	@Before("methodsWithItemMoveJsonPC()")
+	public void beforeMethodsWithItemMoveJson(JoinPoint joinPoint) {
+		ItemMoveJson itemMoveJson = (ItemMoveJson) joinPoint.getArgs()[0];
+		checkPermissionOfItem(itemMoveJson.getItemId());
 	}
 
 	@Before("methodsWithItemIdPC()")

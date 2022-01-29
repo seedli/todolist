@@ -18,4 +18,6 @@ public interface UserService {
 	Long updateUser(UserJson userJson);
 
 	Long updatePassword(UserJson userJson);
+
+	Long deleteUser(Long userId);
 }
