@@ -34,16 +34,18 @@ http://localhost:8080/todolist/swagger-ui.html
 
 # Funtionalities
 ## User controlling
+The RESTFul APIs are secured by **Basic Authentication**
+
 Once the application has been started, there are three user accounts with different role have been pre-populated
 - admin (role : ADMIN)
 - tom (role : USER)
 - jerry (role : USER)
 
-Their default password all are **Truck123**
+Their default password are **Truck123**
 
 Users with ADMIN role can do any manipulation of the funtions of this application.
 
-Normal USER can view the user list, chenge their password, view the lists which are belong to them or shared with them, and update their items.
+Normal USER can view the user list, chenge the password of their owned, view the lists belong to them or have been shared with them, and update the items.
 
 ### API Examples
 #### Get user list
