@@ -27,7 +27,7 @@ http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibas
 				<constraints nullable="false"/>
 			</column>
 			<column name="role_id" type="BIGINT">
-				<constraints foreignKeyName="fk_user_role_id" references="roles(role_id)" nullable="false"/>
+				<constraints foreignKeyName="fk_user_role_id" references="roles(role_id)"/>
 			</column>
 		</createTable>
 		
@@ -39,7 +39,7 @@ http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibas
 				<constraints nullable="false"/>
 			</column>
 			<column name="user_id" type="BIGINT">
-				<constraints foreignKeyName="fk_list_user_id" references="users(user_id)" nullable="false"/>
+				<constraints foreignKeyName="fk_list_user_id" references="users(user_id)"/>
 			</column>
 		</createTable>
 		
@@ -57,7 +57,7 @@ http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibas
 			<column name="is_done" type="boolean"/>
 			<column name="sort_order" type="int"/>
 			<column name="list_id" type="BIGINT">
-				<constraints foreignKeyName="fk_item_list_id" references="lists(list_id)" nullable="false"/>
+				<constraints foreignKeyName="fk_item_list_id" references="lists(list_id)"/>
 			</column>
 		</createTable>
 		
