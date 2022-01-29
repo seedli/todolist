@@ -26,7 +26,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import tom.demo.todolist.CustomWebMvcConfig;
+import tom.demo.todolist.CustomSecurityConfig;
 import tom.demo.todolist.config.BeanConfig;
 import tom.demo.todolist.controller.json.UserJson;
 import tom.demo.todolist.domain.Role;
@@ -34,7 +34,7 @@ import tom.demo.todolist.domain.User;
 import tom.demo.todolist.service.UserService;
 
 @WebMvcTest(UserController.class)
-@Import({ CustomWebMvcConfig.class, BeanConfig.class })
+@Import({ CustomSecurityConfig.class, BeanConfig.class })
 public class UserControllerTest {
 
 	@Autowired

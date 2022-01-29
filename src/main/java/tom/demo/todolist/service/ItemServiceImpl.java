@@ -17,7 +17,6 @@ import tom.demo.todolist.dao.ListDAO;
 import tom.demo.todolist.dao.UserDAO;
 import tom.demo.todolist.domain.Item;
 import tom.demo.todolist.domain.TodoList;
-import tom.demo.todolist.domain.User;
 import tom.demo.todolist.util.QueryConstants;
 
 @Service
@@ -31,19 +30,6 @@ public class ItemServiceImpl implements ItemService {
 
 	@Autowired
 	UserDAO userDAO;
-
-	@Override
-	public boolean hasPermissionOfItem(Long userId, Long itemId) {
-		Item item = itemDAO.findById(itemId).orElse(null);
-		User user = userDAO.findById(userId).orElse(null);
-		if (item != null && user != null && user.getTodoLists() != null) {
-			for (TodoList list : user.getTodoLists()) {
-				if (list.getId() == item.getListId())
-					return true;
-			}
-		}
-		return false;
-	}
 
 	@Override
 	public List<Item> getItemsByListId(Long listId, String orderBy, String sort, String status) {

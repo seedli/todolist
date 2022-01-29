@@ -14,12 +14,14 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.TestPropertySource;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import tom.demo.todolist.CustomSecurityConfig;
 import tom.demo.todolist.controller.json.ItemJson;
 import tom.demo.todolist.controller.json.ItemMoveJson;
 import tom.demo.todolist.dao.ItemDAO;
@@ -30,8 +32,8 @@ import tom.demo.todolist.domain.TodoList;
 import tom.demo.todolist.domain.User;
 import tom.demo.todolist.util.QueryConstants;
 
-@SpringBootTest
-@TestPropertySource(locations = "classpath:application-integrationtest.properties")
+@ExtendWith(SpringExtension.class)
+@Import({ CustomSecurityConfig.class, ItemServiceImpl.class })
 public class ItemServiceImplTest {
 
 	@MockBean
@@ -92,11 +94,6 @@ public class ItemServiceImplTest {
 		Mockito.when(userDAO.findById(anyLong())).thenReturn(Optional.of(tom));
 		Mockito.when(listDAO.findById(anyLong())).thenReturn(Optional.of(list));
 
-	}
-
-	@Test
-	public void hasPermissionOfItemTest() {
-		assertTrue(itemService.hasPermissionOfItem(1L, 1L));
 	}
 
 	@Test

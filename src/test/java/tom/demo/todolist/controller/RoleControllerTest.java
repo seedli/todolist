@@ -18,13 +18,13 @@ import org.springframework.context.annotation.Import;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 
-import tom.demo.todolist.CustomWebMvcConfig;
+import tom.demo.todolist.CustomSecurityConfig;
 import tom.demo.todolist.config.BeanConfig;
 import tom.demo.todolist.domain.Role;
 import tom.demo.todolist.service.RoleService;
 
 @WebMvcTest(RoleController.class)
-@Import({ CustomWebMvcConfig.class, BeanConfig.class })
+@Import({ CustomSecurityConfig.class, BeanConfig.class })
 public class RoleControllerTest {
 	@Autowired
 	private MockMvc mockMvc;

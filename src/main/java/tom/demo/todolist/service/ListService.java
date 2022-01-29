@@ -7,8 +7,6 @@ import tom.demo.todolist.domain.TodoList;
 
 public interface ListService {
 
-	boolean hasPermissionOfList(Long userId, Long listId);
-
 	ListJson updateList(ListJson listJson);
 
 	List<TodoList> getListsByUserId(Long userId);

@@ -17,7 +17,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import tom.demo.todolist.util.CustomUser;
 
 @TestConfiguration
-public class CustomWebMvcConfig {
+public class CustomSecurityConfig {
 	@Bean
 	@Primary
 	public UserDetailsService userDetailsService() {

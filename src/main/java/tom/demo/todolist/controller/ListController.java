@@ -3,7 +3,6 @@ package tom.demo.todolist.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 import io.swagger.annotations.Api;
 import tom.demo.todolist.adapter.ItemJsonAdapter;
@@ -54,53 +52,32 @@ public class ListController {
 			@RequestParam(value = "orderBy", required = false) String orderBy,
 			@RequestParam(value = "sort", required = false) String sort) {
 
-		if (UserUtilities.isAdmin() || listService.hasPermissionOfList(UserUtilities.getCurrentUserId(), listId))
-			return (List<ItemJson>) new ItemJsonAdapter()
-					.convertDomainToJSON(itemService.getItemsByListId(listId, orderBy, sort, status));
-		else
-			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+		return (List<ItemJson>) new ItemJsonAdapter()
+				.convertDomainToJSON(itemService.getItemsByListId(listId, orderBy, sort, status));
 	}
 
 	@PostMapping
 	public Long createList(@RequestBody ListJson listJson) {
-		if (UserUtilities.isAdmin() || UserUtilities.isCurrentUser(listJson.getUserId()))
-			return listService.createList(listJson);
-		else
-			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+		return listService.createList(listJson);
 	}
 
 	@DeleteMapping("/{listId}")
 	public Long deleteList(@PathVariable("listId") Long listId) {
-		if (UserUtilities.isAdmin() || listService.hasPermissionOfList(UserUtilities.getCurrentUserId(), listId))
-			return listService.deleteList(listId);
-		else
-			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+		return listService.deleteList(listId);
 	}
 
 	@PutMapping
 	public ListJson updateList(@RequestBody ListJson listJson) {
-		if (UserUtilities.isAdmin()
-				|| listService.hasPermissionOfList(UserUtilities.getCurrentUserId(), listJson.getId()))
-			return listService.updateList(listJson);
-		else
-			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+		return listService.updateList(listJson);
 	}
 
 	@PutMapping("/share/{listId}/{userId}")
 	public Long shareListToUser(@PathVariable("listId") Long listId, @PathVariable("userId") Long userId) {
-		if (UserUtilities.isAdmin()
-				|| listService.hasPermissionOfList(UserUtilities.getCurrentUserId(), listId))
-			return listService.shareListToUser(listId, userId);
-		else
-			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+		return listService.shareListToUser(listId, userId);
 	}
 
 	@PutMapping("/revoke/{listId}/{userId}")
 	public Long revokeListFromUser(@PathVariable("listId") Long listId, @PathVariable("userId") Long userId) {
-		if (UserUtilities.isAdmin()
-				|| listService.hasPermissionOfList(UserUtilities.getCurrentUserId(), listId))
-			return listService.revokeSharedListFromUser(listId, userId);
-		else
-			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+		return listService.revokeSharedListFromUser(listId, userId);
 	}
 }

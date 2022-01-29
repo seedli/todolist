@@ -28,7 +28,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
-import tom.demo.todolist.CustomWebMvcConfig;
+import tom.demo.todolist.CustomSecurityConfig;
 import tom.demo.todolist.config.BeanConfig;
 import tom.demo.todolist.controller.json.ItemJson;
 import tom.demo.todolist.controller.json.ItemMoveJson;
@@ -37,7 +37,7 @@ import tom.demo.todolist.service.ItemService;
 import tom.demo.todolist.service.ListService;
 
 @WebMvcTest(ItemController.class)
-@Import({ CustomWebMvcConfig.class, BeanConfig.class })
+@Import({ CustomSecurityConfig.class, BeanConfig.class })
 public class ItemControllerTest {
 
 	@Autowired

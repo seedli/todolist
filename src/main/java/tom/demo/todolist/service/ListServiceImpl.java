@@ -42,26 +42,6 @@ public class ListServiceImpl implements ListService {
 	}
 
 	@Override
-	public boolean hasPermissionOfList(Long userId, Long listId) {
-		User user = userDAO.findById(userId).orElse(null);
-		if (user != null) {
-			if (user.getTodoLists() != null) {
-				for (TodoList list : user.getTodoLists()) {
-					if (list.getId() == listId)
-						return true;
-				}
-			}
-			if (user.getSharedLists() != null) {
-				for (TodoList list : user.getSharedLists()) {
-					if (list.getId() == listId)
-						return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	@Override
 	public Long createList(ListJson json) {
 		TodoList list = new TodoList();
 		list.setName(json.getName());

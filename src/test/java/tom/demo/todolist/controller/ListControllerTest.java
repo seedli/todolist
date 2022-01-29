@@ -32,7 +32,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import tom.demo.todolist.CustomWebMvcConfig;
+import tom.demo.todolist.CustomSecurityConfig;
 import tom.demo.todolist.config.BeanConfig;
 import tom.demo.todolist.controller.json.ListJson;
 import tom.demo.todolist.domain.Item;
@@ -43,7 +43,7 @@ import tom.demo.todolist.service.ItemService;
 import tom.demo.todolist.service.ListService;
 
 @WebMvcTest(ListController.class)
-@Import({ CustomWebMvcConfig.class, BeanConfig.class })
+@Import({ CustomSecurityConfig.class, BeanConfig.class })
 public class ListControllerTest {
 
 	@Autowired
@@ -109,7 +109,6 @@ public class ListControllerTest {
 		Mockito.when(listService.getListsByUserId(anyLong())).thenReturn(lists);
 		Mockito.when(listService.getListSharedListsByUserId(anyLong())).thenReturn(lists);
 		Mockito.when(itemService.getItemsByListId(anyLong(), anyString(), anyString(), anyString())).thenReturn(items);
-		Mockito.when(listService.hasPermissionOfList(anyLong(), anyLong())).thenReturn(true);
 		Mockito.when(listService.updateList(any(ListJson.class))).then(returnsFirstArg());
 		Mockito.when(listService.createList(any(ListJson.class))).thenReturn(99L);
 		Mockito.when(listService.deleteList(anyLong())).thenReturn(99L);

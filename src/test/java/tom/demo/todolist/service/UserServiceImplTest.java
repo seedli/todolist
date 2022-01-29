@@ -10,21 +10,23 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import tom.demo.todolist.CustomSecurityConfig;
 import tom.demo.todolist.controller.json.UserJson;
 import tom.demo.todolist.dao.RoleDAO;
 import tom.demo.todolist.dao.UserDAO;
 import tom.demo.todolist.domain.Role;
 import tom.demo.todolist.domain.User;
 
-@SpringBootTest
-@TestPropertySource(locations = "classpath:application-integrationtest.properties")
+@ExtendWith(SpringExtension.class)
+@Import({ CustomSecurityConfig.class, UserServiceImpl.class })
 public class UserServiceImplTest {
 
 	@Autowired

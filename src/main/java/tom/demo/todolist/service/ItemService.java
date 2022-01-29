@@ -18,8 +18,6 @@ public interface ItemService {
 
 	ItemJson updateItem(ItemJson json);
 
-	boolean hasPermissionOfItem(Long userId, Long itemId);
-
 	Long deleteItem(Long itemId);
 
 }

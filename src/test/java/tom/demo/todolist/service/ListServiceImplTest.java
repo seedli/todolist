@@ -1,8 +1,6 @@
 package tom.demo.todolist.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 
@@ -13,20 +11,22 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.TestPropertySource;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import tom.demo.todolist.CustomSecurityConfig;
 import tom.demo.todolist.controller.json.ListJson;
 import tom.demo.todolist.dao.ListDAO;
 import tom.demo.todolist.dao.UserDAO;
 import tom.demo.todolist.domain.TodoList;
 import tom.demo.todolist.domain.User;
 
-@SpringBootTest
-@TestPropertySource(locations = "classpath:application-integrationtest.properties")
+@ExtendWith(SpringExtension.class)
+@Import({ CustomSecurityConfig.class, ListServiceImpl.class })
 public class ListServiceImplTest {
 
 	@MockBean
@@ -80,13 +80,6 @@ public class ListServiceImplTest {
 	@Test
 	public void getListSharedWithMe() {
 		assertEquals(1, listService.getListSharedListsByUserId(1L).size());
-	}
-
-	@Test
-	public void hasPermissionOfListTest() {
-		assertTrue(listService.hasPermissionOfList(1L, 1L));
-		assertTrue(listService.hasPermissionOfList(1L, 3L));
-		assertFalse(listService.hasPermissionOfList(1L, 4L));
 	}
 
 	@Test

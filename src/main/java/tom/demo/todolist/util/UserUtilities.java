@@ -16,6 +16,8 @@ public class UserUtilities {
 	}
 
 	public static boolean isCurrentUser(Long userId) {
+		System.out.println("isCurrentUser");
+
 		CustomUser customUser = getCurrentUser();
 		return customUser == null ? false : customUser.getUserId() == userId;
 	}
