@@ -169,6 +169,8 @@ PUT /todolist/item/move
 ```
 Note: the item will be only move within in the same list if **targetListId** is not being specified.
 
+# Database ER-Diagram
+![ER-Diagram](https://seedli.github.io/img/er.png)
 # Technical specifications
 This application is written in JAVA and using Spring Boot 2.6.3 as the basement.
 For the implementation I used.
