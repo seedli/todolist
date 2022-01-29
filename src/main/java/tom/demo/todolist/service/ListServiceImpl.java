@@ -51,7 +51,11 @@ public class ListServiceImpl implements ListService {
 
 	@Override
 	public Long deleteList(Long listId) {
-		listDAO.deleteById(listId);
+		TodoList list = listDAO.findById(listId).orElse(null);
+
+		if (list != null)
+			listDAO.delete(list);
+
 		return listId;
 	}
 

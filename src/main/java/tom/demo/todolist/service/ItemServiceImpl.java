@@ -76,7 +76,11 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	public Long deleteItem(Long itemId) {
-		itemDAO.deleteById(itemId);
+		Item item = itemDAO.findById(itemId).orElse(null);
+
+		if (item != null)
+			itemDAO.delete(item);
+
 		return itemId;
 	}
 

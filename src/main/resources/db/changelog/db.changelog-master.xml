@@ -9,7 +9,7 @@ http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibas
 		<comment>Init schema</comment>
 		<createTable tableName="roles">
 			<column name="role_id" type="BIGINT" autoIncrement="true">
-	            <constraints primaryKey="true" nullable="false"/>
+	            <constraints primaryKey="true"/>
 	        </column>
 			<column name="role" type="varchar(50)">
 				<constraints nullable="false"/>
@@ -18,7 +18,7 @@ http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibas
 
 		<createTable tableName="users">
 			<column name="user_id" type="BIGINT" autoIncrement="true">
-	            <constraints primaryKey="true" nullable="false"/>
+	            <constraints primaryKey="true"/>
 	        </column>
 			<column name="name" type="varchar(50)">
 				<constraints unique="true" nullable="false"/>
@@ -33,7 +33,7 @@ http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibas
 		
 		<createTable tableName="lists">
 			<column name="list_id" type="BIGINT" autoIncrement="true">
-	            <constraints primaryKey="true" nullable="false"/>
+	            <constraints primaryKey="true"/>
 	        </column>
 	        <column name="name" type="varchar(50)">
 				<constraints nullable="false"/>
@@ -45,7 +45,7 @@ http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibas
 		
 		<createTable tableName="items">
 			<column name="item_id" type="BIGINT" autoIncrement="true">
-	            <constraints primaryKey="true" nullable="false"/>
+	            <constraints primaryKey="true"/>
 	        </column>
 	        <column name="name" type="varchar(50)">
 				<constraints nullable="false"/>

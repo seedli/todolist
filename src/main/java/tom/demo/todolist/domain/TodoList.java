@@ -30,7 +30,7 @@ public class TodoList {
 	@Column(name = "user_id")
 	private Long userId;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "list_id")
 	private List<Item> items;
 
