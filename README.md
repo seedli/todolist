@@ -171,6 +171,10 @@ PUT /todolist/item/move
 ```
 Note: the item will be only move within in the same list if **targetListId** is not being specified.
 
+**Not all APIs are listed above, please check the swagger document to see the full API list.**
+
+http://localhost:8080/todolist/swagger-ui/index.html
+
 # Database ER-Diagram
 ![ER-Diagram](https://seedli.github.io/img/er.png)
 # Technical specifications
