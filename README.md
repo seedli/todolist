@@ -6,7 +6,7 @@ This is my api demo work to demostrate the manipulation of the todo lists.
 # steps to run up this application
 Please follow the following steps to run up this application.
 ## 1. create a MySql instance
-This application is running based on a MySql database, please start a instance by using Docker at first.
+This application is running based on a MySql database, please start an instance by using Docker at first.
 ```bash
 docker network create demo-network
 docker run --name mysql --network demo-network -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=demoDB -d mysql:8
@@ -28,9 +28,9 @@ docker run --name demoApp --network demo-network -p 8080:8080 -d demo-app
 ```
 Of course, you can modify the port **-p [port]:8080** as your desired.
 ## 3. affirm the application is running up
-Open the swagger ui link to affirm the application has been started up.
+Hit the swagger ui link to affirm the application has been run up.
 
-http://localhost:8080/todolist/swagger-ui.html
+http://localhost:8080/todolist/swagger-ui/index.html
 
 # Funtionalities
 ## User controlling
@@ -43,9 +43,9 @@ Once the application has been started, there are three user accounts with differ
 
 Their default password are **Truck123**
 
-Users with ADMIN role can do any manipulation of the funtions of this application.
+Users with **ADMIN** role can do any manipulation of the funtions of this application.
 
-Normal USER can view the user list, chenge the password of their owned, view the lists belong to them or have been shared with them, and update the items.
+Normal **USER** can view the user list, chenge the password of their owned, view the lists belong to them or have been shared with them, and update their items.
 
 ### API Examples
 #### Get user list
@@ -183,7 +183,7 @@ For the implementation I used.
 
 Besides, I am also using following tools/frameworks to implement the functionalities that I need.
 - Liquibase to initiate the DB Schema, and also pre-populate the data for demonstration.
-- H2 in memory DB for the DAO unit tests.
+- H2 in memory DB to seperate the data from runtime environment and the DAO integration tests.
 - Swagger to generate the API document automatically.
 
 Thanks for your watching, Have a good day!
