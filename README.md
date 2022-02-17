@@ -2,7 +2,7 @@
 This is my api demo work to demostrate the manipulation of the todo lists.
 
 # prerequisite
-**Jdk11** and **Maven**, **Docker** are required.
+**Jdk11**, **Maven**, and **Docker** are required.
 # steps to run up this application
 Please follow the following steps to run up this application.
 ## 1. create a MySql instance
